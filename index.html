@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090817">
+<title>My Café • Neon Rewards</title>
+<style>
+:root{--bg:#090817;--panel:#121127;--panel2:#191733;--line:#302957;--text:#f8f7ff;--muted:#aaa6ca;--blue:#40c9ff;--purple:#a855f7;--pink:#ff4fd8;--orange:#ff8a3d;--red:#ff4f79;--yellow:#ffe45e;--green:#52f5bd;--radius:18px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#25205a 0,transparent 38%),radial-gradient(ellipse at 90% 15%,#42143f 0,transparent 30%),var(--bg);background-attachment:fixed;color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;color:#fff;font-weight:750;border-radius:12px;padding:11px 15px;background:linear-gradient(110deg,#7c3aed,#d946ef);box-shadow:0 0 18px #a855f733;transition:.18s}button:hover{filter:brightness(1.12);transform:translateY(-1px)}button:active{transform:translateY(0) scale(.97)}button.secondary{background:#242142;border:1px solid var(--line);box-shadow:none}button.danger{background:#4b1931;border:1px solid #8b2e57;box-shadow:none}button.small{padding:7px 10px;font-size:13px}
+input,select{width:100%;background:#0c0b1c;border:1px solid #39315f;border-radius:10px;color:var(--text);padding:11px 12px;outline:none;min-width:0;transition:border-color .2s,box-shadow .2s}input:focus,select:focus{border-color:var(--pink);box-shadow:0 0 0 3px #ff4fd81c}input[type=number]{appearance:textfield}label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(25px,4vw,36px);line-height:1.12;margin-bottom:8px}h2{font-size:19px;margin-bottom:4px}h3{font-size:15px}.muted{color:var(--muted)}.tiny{font-size:12px}.accent{background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink),var(--orange));background-clip:text;-webkit-background-clip:text;color:transparent}
+.topbar{position:sticky;top:0;z-index:30;background:#090817bf;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid #302957aa}
+header{max-width:1250px;margin:auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:12px}
+.logo{width:46px;height:46px;border-radius:14px;background:#0c0b1c;border:1px solid #7b54bd;display:grid;place-items:center;box-shadow:0 0 24px #b14dff66,inset 0 0 14px #a855f726;flex:none}
+.logo svg{width:27px;height:27px;filter:drop-shadow(0 0 4px #ff4fd8aa)}
+.steam{stroke-dasharray:14;animation:steam 2.6s ease-in-out infinite}.steam.s2{animation-delay:.5s}.steam.s3{animation-delay:1s}
+@keyframes steam{0%{stroke-dashoffset:14;opacity:0}50%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-14;opacity:0}}
+.brandname{font-weight:900;letter-spacing:.4px}.brandname small{display:block;color:var(--muted);font-weight:500;letter-spacing:1.2px;font-size:10px}.header-actions{display:flex;gap:8px;align-items:center}
+.userchip{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#ddd5ff;border:1px solid #50427e;border-radius:999px;padding:6px 12px;background:#17152d}
+main{max-width:1250px;margin:auto;padding:18px 22px 50px}
+.hero{border:1px solid #55418b;border-radius:24px;padding:28px;background:linear-gradient(115deg,#201747dd,#21112ddd 75%);box-shadow:0 15px 55px #0005;position:relative;overflow:hidden}
+.hero:after{content:"✦";position:absolute;right:5%;top:-25px;font-size:160px;color:#ff4fd811;pointer-events:none;animation:spinSlow 40s linear infinite}
+.hero:before{content:"";position:absolute;left:-60%;top:0;width:40%;height:3px;background:linear-gradient(90deg,transparent,var(--blue),var(--pink),transparent);animation:scanLine 5s ease-in-out infinite}
+@keyframes scanLine{0%{left:-60%}60%,100%{left:130%}}@keyframes spinSlow{to{transform:rotate(360deg)}}
+.hero p{max-width:680px;color:#c6c0e8;margin:0}.hero-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.hero h1{font-size:clamp(28px,4.6vw,42px)}
+.hero .fl{position:absolute;pointer-events:none;color:var(--pink);opacity:.25;animation:floaty 7s ease-in-out infinite}.hero .f1{right:18%;top:22%;font-size:22px}.hero .f2{right:9%;bottom:18%;font-size:16px;color:var(--blue);animation-delay:1.5s}.hero .f3{right:30%;bottom:12%;font-size:14px;color:var(--purple);animation-delay:3s}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(20deg)}}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid #50427e;border-radius:999px;padding:5px 10px;font-size:11px;color:#ddd5ff;margin-bottom:13px}.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 10px var(--green)}
+.steps{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:9px;background:#0c0b1c99;border:1px solid #39315f;box-shadow:none;color:#bcb5db;padding:7px 15px 7px 7px;border-radius:999px;font-size:13px}
+.step .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#242142;font-size:12px}
+.step.active{border-color:var(--pink);color:#fff;box-shadow:0 0 18px #ff4fd822}.step.active .n{background:linear-gradient(110deg,#7c3aed,#d946ef)}
+.step.done{border-color:#245b4d}.step.done .n{background:var(--green);font-size:0}.step.done .n:after{content:"✓";font-size:12px;color:#06241b}
+.step.locked{opacity:.55}
+.card{background:#121127eF;border:1px solid var(--line);border-radius:var(--radius);padding:17px;box-shadow:0 10px 28px #0002}
+#app .card,#app .resultbox,#app .prize,#app .history-item{position:relative;transition:transform .2s,border-color .2s,box-shadow .2s}
+#app .card:before,#app .resultbox:before,#app .prize:before,#app .history-item:before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),#a855f71f,transparent 60%);opacity:0;transition:opacity .25s;pointer-events:none}
+#app .card:hover:before,#app .resultbox:hover:before,#app .prize:hover:before,#app .history-item:hover:before{opacity:1}
+#app .card:hover{border-color:#4a3d80}
+.tabs{display:flex;gap:8px;overflow:auto;padding:22px 0 13px}.tab{white-space:nowrap;background:#17152d;border:1px solid #302957;color:#bcb5db;box-shadow:none}.tab.active{background:linear-gradient(110deg,#3d2780,#682a78);border-color:#a855f7;color:white;box-shadow:0 0 18px #a855f733}
+.view{display:none}.view.active{display:block;animation:viewIn .45s ease both}
+@keyframes viewIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.section-head p{margin:3px 0 0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px}.formgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.formgrid .wide{grid-column:span 2}.section-title{display:flex;align-items:center;gap:9px;margin-bottom:13px}.section-title .ico{width:33px;height:33px;display:grid;place-items:center;border-radius:10px;background:#2b1e4c;color:#e9a7ff}.divider{height:1px;background:#2b254b;margin:16px 0}
+.tablewrap{overflow:auto;border:1px solid #302957;border-radius:13px}table{width:100%;border-collapse:collapse;min-width:700px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid #282343;font-size:13px}th{background:#1b1835;color:#bdb5df;font-size:11px;text-transform:uppercase;letter-spacing:.5px}tr:last-child td{border-bottom:0}tbody tr{transition:background .2s}tbody tr:hover td{background:#1b183566}td input{padding:8px 9px}td strong{font-size:13px}
+tr.enter td{animation:rowIn .4s ease both}@keyframes rowIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font-size:11px;background:#242142;color:var(--muted);border:1px solid transparent}.badge.on{background:#102820;color:var(--green);border-color:#245b4d}
+.prize-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.prize{padding:13px;border-radius:14px;background:#0d0c1e;border:1px solid #302957}.prize:hover{transform:translateY(-3px)}.prize .emoji{font-size:22px;display:inline-block;transition:transform .25s}.prize:hover .emoji{transform:scale(1.25) rotate(-8deg)}.prize input{margin-top:8px}.prize.filled{background:#15122b;box-shadow:0 0 0 1px var(--pink),0 0 22px #ff4fd822}.prize-prev{margin-top:6px;font-size:11px;color:var(--muted)}.prize-prev b{color:var(--text)}.prize-prev .keep{color:var(--green)}
+.prize.diamonds{border-color:#2484b8}.prize.rubies{border-color:#a62c58}.prize.gold{border-color:#a77b1d}.prize.pink{border-color:#a53b91}.prize.blue{border-color:#2861b5}.prize.spice{border-color:#a95425}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.row.between{justify-content:space-between}.notice{border:1px solid #54402a;background:#2c2118;color:#ffdb9c;border-radius:12px;padding:12px 14px;font-size:12px}.success{border-color:#245b4d;background:#102820;color:#9ff7d5}
+.resultbox{background:linear-gradient(120deg,#161331,#20112d);border:1px solid #573d7e;border-radius:16px;padding:16px}.resultbox .big{font-size:24px;font-weight:850;color:var(--green)}
+.rgrid{display:grid;gap:12px;margin-top:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:#0d0c1e;border:1px solid #39315f;border-radius:999px;padding:6px 12px 6px 8px;font-size:13px;animation:pop .35s cubic-bezier(.2,.9,.3,1.3) both}.chip .ce{font-size:18px}.chip .cn{color:var(--muted)}.chip b{color:var(--text)}
+.resultbox.keep{border-color:#245b4d}.resultbox.keep .chip{border-color:#245b4d}.resultbox.keep .chip b{color:var(--green)}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+.bar{height:4px;border-radius:4px;background:#2b254b;margin-top:5px;overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));border-radius:4px;animation:grow .9s ease both}@keyframes grow{from{width:0}}
+.empty{text-align:center;padding:35px 15px;color:var(--muted)}
+.history-item{border:1px solid var(--line);border-radius:14px;padding:15px;background:#121127;margin-bottom:10px}.history-item:hover{transform:translateY(-2px);border-color:#4a3d80}.history-item h3{margin:0 0 5px}.history-item .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:0}.detail{border-top:1px solid #2b254b;margin-top:14px;padding-top:14px}
+.hidden{display:none!important}.status{font-size:12px;color:var(--muted)}.status.ok{color:var(--green)}.status.bad{color:#ff91ab}
+.login{max-width:430px;margin:8vh auto;padding:25px}.login h2{font-size:24px}.login .field{margin:13px 0}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:40;background:#242044;border:1px solid #7b54bd;padding:12px 18px;border-radius:12px;box-shadow:0 10px 35px #0008;max-width:90vw;animation:toastIn .35s ease}@keyframes toastIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}
+.footer{text-align:center;color:#777195;font-size:11px;padding:22px}
+@media(max-width:850px){.grid2{grid-template-columns:1fr}.formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.prize-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-top{display:block}.header-actions .status{display:none}}
+@media(max-width:520px){header{padding:11px 14px}main{padding:12px 14px 35px}.brandname{font-size:13px}.logo{width:39px;height:39px}.hero{padding:19px}.formgrid{grid-template-columns:1fr 1fr}.formgrid .wide{grid-column:span 2}.prize-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.section-head{align-items:flex-start;flex-direction:column}.header-actions button{padding:9px 11px}.userchip{display:none}}
+
+/* ===== Menu do usuário e lixeira do histórico ===== */
+.usermenu{position:relative}
+.umbtn{display:flex;align-items:center;gap:8px;background:#17152d;border:1px solid #50427e;box-shadow:none;color:#ddd5ff;padding:4px 12px 4px 4px;border-radius:999px;font-size:13px}
+.umbtn:hover{border-color:var(--pink)}
+.avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(110deg,#7c3aed,#d946ef);font-size:13px;font-weight:800;color:#fff;flex:none}
+.uname{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.caret{font-size:10px;transition:transform .2s}
+.umbtn[aria-expanded=true] .caret{transform:rotate(180deg)}
+.umpanel{position:absolute;right:0;top:calc(100% + 10px);width:290px;background:#121127;border:1px solid #55418b;border-radius:16px;padding:14px;box-shadow:0 18px 50px #000a;opacity:0;transform:translateY(-8px) scale(.97);pointer-events:none;visibility:hidden;transition:.2s;z-index:50;transform-origin:top right}
+.umpanel.open{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.umdiv{height:1px;background:#2b254b;margin:12px -14px}
+.umitem{width:100%;text-align:left;background:transparent;box-shadow:none;border-radius:10px;padding:10px;color:var(--text);font-weight:650}
+.umitem:hover{background:#242142;transform:none;filter:none}
+.trash{min-width:36px}
+.trash.armed{background:var(--red);border-color:var(--red);color:#fff;animation:pop .25s ease both}
+#app .history-item.removing{opacity:0;transform:translateX(30px) scale(.97);transition:.3s}
+@media(max-width:520px){.uname,.caret{display:none}.umbtn{padding:4px}.umpanel{right:-6px;width:min(290px,calc(100vw - 28px))}}
+
+/* ===== PAINEL DE LOGIN — camada interativa ===== */
+#loginBg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+#loginBg .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.28;will-change:transform}
+#loginBg .o1{width:340px;height:340px;background:var(--blue);left:8%;top:12%;animation:floatA 14s ease-in-out infinite}
+#loginBg .o2{width:380px;height:380px;background:var(--purple);right:6%;top:30%;animation:floatB 17s ease-in-out infinite}
+#loginBg .o3{width:300px;height:300px;background:var(--pink);left:38%;bottom:-6%;animation:floatC 19s ease-in-out infinite}
+#loginBg .spark{position:absolute;color:var(--pink);opacity:0;font-size:14px;animation:twinkle 6s ease-in-out infinite}
+@keyframes floatA{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,40px)}}
+@keyframes floatB{0%,100%{transform:translate(0,0)}50%{transform:translate(-70px,-30px)}}
+@keyframes floatC{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-50px)}}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.5) rotate(0)}50%{opacity:.8;transform:scale(1.15) rotate(90deg)}}
+.login{position:relative;z-index:1;overflow:hidden;border-color:#55418b;box-shadow:0 20px 60px #0007,0 0 40px #a855f71f;transform-style:preserve-3d;transition:transform .15s ease-out,border-color .3s;animation:loginIn .7s cubic-bezier(.2,.8,.2,1) both}
+.login:before{content:"";position:absolute;inset:0;background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),#a855f726,transparent 60%);pointer-events:none;transition:opacity .3s}
+.login:after{content:"";position:absolute;left:-60%;top:0;width:40%;height:3px;background:linear-gradient(90deg,transparent,var(--blue),var(--pink),transparent);animation:scanLine 4s ease-in-out infinite;pointer-events:none}
+@keyframes loginIn{from{opacity:0;transform:translateY(28px) scale(.96)}to{opacity:1;transform:none}}
+.login.shake{animation:shake .45s}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+.login>*{position:relative}
+.login .logo{animation:logoPulse 3s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 22px #b14dff55;transform:rotate(0)}50%{box-shadow:0 0 38px #ff4fd899;transform:rotate(-6deg) scale(1.06)}}
+.login .logo:hover{animation-duration:.8s}
+.login .lpill{display:inline-flex;align-items:center;gap:7px;border:1px solid #50427e;border-radius:999px;padding:4px 10px;font-size:10px;letter-spacing:1.2px;color:#ddd5ff;margin-bottom:10px}
+.login .field{transition:transform .2s}.login .field:focus-within{transform:translateX(3px)}.login .field:focus-within label{color:var(--pink)}.login .field label{transition:color .2s}
+.inwrap{position:relative}
+.inwrap .lead{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.7;pointer-events:none;transition:.2s}
+.inwrap input{padding-left:38px}
+.inwrap:focus-within .lead{opacity:1;transform:translateY(-50%) scale(1.15)}
+.inwrap.pw input{padding-right:46px}
+.field.valid input{border-color:var(--green);box-shadow:0 0 0 3px #52f5bd1a}
+.field.invalid input{border-color:var(--red);box-shadow:0 0 0 3px #ff4f791a}
+.pw-toggle{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:34px;height:34px;padding:0;display:grid;place-items:center;background:transparent;box-shadow:none;font-size:15px;color:var(--muted);border-radius:9px}
+.pw-toggle:hover{background:#242142;transform:translateY(-50%);filter:none;color:#fff}
+.hint{font-size:11px;min-height:16px;margin-top:5px;color:var(--muted);transition:color .2s}
+.hint.warn{color:var(--yellow)}.hint.ok{color:var(--green)}.hint.bad{color:#ff91ab}
+.meter{display:flex;gap:4px;margin-top:7px}
+.meter i{flex:1;height:3px;border-radius:3px;background:#2b254b;transition:background .3s}
+.meter.s1 i:nth-child(1){background:var(--red)}
+.meter.s2 i:nth-child(-n+2){background:var(--orange)}
+.meter.s3 i:nth-child(-n+3){background:var(--yellow)}
+.meter.s4 i{background:var(--green)}
+.remember{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer;margin:2px 0 14px;user-select:none}
+.remember input{width:auto;accent-color:var(--pink);cursor:pointer}
+#loginBtn{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:9px}
+#loginBtn:after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,#ffffff40,transparent);transform:skewX(-20deg);transition:.6s}
+#loginBtn:hover:after{left:130%}
+#loginBtn:disabled{cursor:progress;filter:brightness(.9);transform:none}
+#loginBtn .spinner{display:none;width:15px;height:15px;border:2px solid #ffffff55;border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+#loginBtn.loading .spinner{display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loginBtn.done{background:linear-gradient(110deg,#0f9d78,#52f5bd);color:#06241b}
+.login .status{min-height:18px;transition:color .2s}
+@media(prefers-reduced-motion:reduce){#loginBg .orb,#loginBg .spark,.login,.login:after,.login .logo,.hero:before,.hero:after,.hero .fl,.steam,.view.active,.chip,.bar i,tr.enter td{animation:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="neonG" gradientUnits="userSpaceOnUse" x1="4" y1="4" x2="44" y2="44"><stop offset="0" stop-color="#40c9ff"/><stop offset=".55" stop-color="#a855f7"/><stop offset="1" stop-color="#ff4fd8"/></linearGradient></defs></svg>
+<div id="loginBg" aria-hidden="true">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <span class="spark" style="left:12%;top:70%;animation-delay:0s">✦</span>
+  <span class="spark" style="left:82%;top:18%;animation-delay:1.4s">✦</span>
+  <span class="spark" style="left:28%;top:22%;animation-delay:2.6s">✧</span>
+  <span class="spark" style="left:70%;top:78%;animation-delay:3.4s">✦</span>
+  <span class="spark" style="left:92%;top:55%;animation-delay:4.4s">✧</span>
+</div>
+<div id="loginScreen" class="login card">
+  <div class="brand" style="margin-bottom:22px"><div class="logo"><svg viewBox="0 0 48 48" fill="none" stroke="url(#neonG)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 20h22v8a10 10 0 0 1-10 10h-2a10 10 0 0 1-10-10z"/><path d="M32 22h3a5 5 0 0 1 0 10h-3"/><path class="steam" d="M16 5c-2 3 2 4 0 8"/><path class="steam s2" d="M21 3c-2 3 2 5 0 9"/><path class="steam s3" d="M26 5c-2 3 2 4 0 8"/><path d="M8 43h28"/></svg></div><div class="brandname">MY CAFÉ <span class="accent">NEON REWARDS</span><small>Desenvolvido por Nexora</small></div></div>
+  <div class="lpill"><span class="dot"></span> ACESSO RESTRITO</div>
+  <h2>Acesso da liderança</h2><p class="muted">Entre com sua conta autorizada para gerenciar as distribuições.</p>
+  <div class="field" id="emailField"><label for="email">E-mail</label><div class="inwrap"><span class="lead">✉</span><input id="email" type="email" autocomplete="username" placeholder="seu@email.com"></div><div class="hint" id="emailHint"></div></div>
+  <div class="field" id="passField"><label for="password">Senha</label><div class="inwrap pw"><span class="lead">🔒</span><input id="password" type="password" autocomplete="current-password" placeholder="Sua senha"><button type="button" class="pw-toggle" id="pwToggle" aria-label="Mostrar senha" title="Mostrar/ocultar senha">👁</button></div><div class="meter" id="pwMeter"><i></i><i></i><i></i><i></i></div><div class="hint" id="passHint"></div></div>
+  <label class="remember"><input type="checkbox" id="rememberEmail"> Lembrar meu e-mail neste dispositivo</label>
+  <button id="loginBtn" style="width:100%"><span class="btn-label">Entrar no painel ↗</span><span class="spinner"></span></button>
+  <p id="loginMessage" class="status" style="margin-top:12px"></p>
+  <p class="tiny muted">Configure as credenciais do Supabase no arquivo HTML. Não há cadastro público nesta interface.</p>
+</div>
+
+<div id="app" class="hidden">
+<div class="topbar"><header>
+  <div class="brand"><div class="logo"><svg viewBox="0 0 48 48" fill="none" stroke="url(#neonG)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 20h22v8a10 10 0 0 1-10 10h-2a10 10 0 0 1-10-10z"/><path d="M32 22h3a5 5 0 0 1 0 10h-3"/><path class="steam" d="M16 5c-2 3 2 4 0 8"/><path class="steam s2" d="M21 3c-2 3 2 5 0 9"/><path class="steam s3" d="M26 5c-2 3 2 4 0 8"/><path d="M8 43h28"/></svg></div><div class="brandname">MY CAFÉ <span class="accent">NEON REWARDS</span><small>Desenvolvido por Nexora</small></div></div>
+  <div class="header-actions"><span id="connectionStatus" class="status">Modo local</span><div class="usermenu">
+    <button class="umbtn" id="userMenuBtn" aria-haspopup="true" aria-expanded="false"><span class="avatar" id="userAvatar">?</span><span class="uname" id="userName"></span><span class="caret">▾</span></button>
+    <div class="umpanel" id="userMenu">
+      <label for="userNameInput">Nome de usuário</label>
+      <input id="userNameInput" maxlength="30" placeholder="Como você quer ser chamado" autocomplete="off">
+      <div class="tiny muted" id="userEmailLine" style="margin-top:6px"></div>
+      <button class="small" id="saveNameBtn" style="width:100%;margin-top:10px">Salvar nome</button>
+      <div class="umdiv"></div>
+      <button class="umitem" id="menuSettingsBtn">⚙ Configurações</button>
+    </div>
+  </div><button class="secondary small" id="logoutBtn">Sair</button></div>
+</header></div>
+<main>
+  <section class="hero">
+    <span class="fl f1">✦</span><span class="fl f2">✧</span><span class="fl f3">✦</span>
+    <div class="hero-top"><div><div class="pill"><span class="dot"></span> CENTRAL DE DISTRIBUIÇÃO</div><h1>Leve sua cidade<br><span class="accent">ao próximo Nível</span></h1><p>Organize os resultados do festival, distribua recompensas justas e mantenha o histórico registrado. Evolua sua cidade com estratégia, transparência e excelência!</p></div></div>
+    <div class="row" style="margin-top:19px"><button id="newFestivalBtn">＋ Nova distribuição</button><button class="secondary" data-tab="history">Ver histórico ↗</button></div>
+    <div class="steps">
+      <button class="step active" data-tab="distribution"><span class="n">1</span>Preencher dados</button>
+      <button class="step locked" data-tab="results"><span class="n">2</span>Revisar resultado</button>
+      <button class="step" data-tab="history"><span class="n">3</span>Histórico</button>
+    </div>
+  </section>
+  <nav class="tabs"><button class="tab active" data-tab="distribution">⚡ Distribuição</button><button class="tab" data-tab="results">🏆 Resultado calculado</button><button class="tab" data-tab="history">🗂 Histórico</button></nav>
+
+  <section id="view-distribution" class="view active">
+    <div class="section-head"><div><h2>Nova distribuição</h2><p class="muted tiny">Preencha o festival e adicione os jogadores participantes.</p></div><span class="pill">90% TROFÉUS · 10% ATIVIDADES</span></div>
+    <div class="card" style="margin-bottom:15px">
+      <div class="section-title"><span class="ico">✧</span><div><h3>Dados do festival</h3><div class="tiny muted">Identifique esta distribuição no histórico.</div></div></div>
+      <div class="formgrid">
+        <div class="wide"><label for="festivalName">Nome / identificação</label><input id="festivalName" placeholder="Ex.: Festival semanal #42"></div>
+        <div><label for="festivalDate">Data da distribuição</label><input id="festivalDate" type="date"></div>
+        <div><label for="festivalNotes">Observações</label><input id="festivalNotes" placeholder="Opcional"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:15px">
+      <div class="section-head"><div class="section-title" style="margin:0"><span class="ico">♟</span><div><h3>Jogadores e contribuição</h3><div class="tiny muted">Atividades: quantidade realizada e nota de 0 a 10.</div></div></div><button class="small" id="addPlayerBtn">＋ Adicionar jogador</button></div>
+      <div class="tablewrap"><table><thead><tr><th>Jogador</th><th>Troféus</th><th>Atividades</th><th>Nota (0–10)</th><th>Participação</th><th></th></tr></thead><tbody id="playersBody"></tbody></table></div>
+      <div class="tiny muted" style="margin-top:9px">Jogadores com troféus, atividades ou nota maior que zero são considerados participantes. Quem tiver todos os valores zerados não recebe prêmios.</div>
+    </div>
+    <div class="card" style="margin-bottom:15px">
+      <div class="section-title"><span class="ico">🎁</span><div><h3>Prêmios conquistados pela cidade</h3><div class="tiny muted">Informe quanto a cidade recebeu. O cálculo distribuirá somente 80% e reservará pelo menos 20%.</div></div></div>
+      <div class="prize-grid" id="prizeGrid"></div>
+    </div>
+    <div class="row between"><div class="notice" style="flex:1">A distribuição é proporcional à pontuação e limitada a 80% de cada prêmio recebido. Os 20% restantes ficam reservados para a cidade.</div><button id="calculateBtn">Calcular distribuição ↗</button></div>
+  </section>
+
+  <section id="view-results" class="view">
+    <div class="section-head"><div><h2>Resultado calculado</h2><p class="muted tiny">Revise as parcelas antes de confirmar.</p></div><button class="secondary small" id="backEditBtn">← Voltar e editar</button></div>
+    <div id="resultSummary" class="resultbox" style="margin-bottom:15px"></div>
+    <div class="card" style="margin-bottom:15px"><div class="section-head"><div><h3>Recompensas por jogador</h3><p class="tiny muted">A coluna de pontos mostra a pontuação ponderada.</p></div><button class="secondary small" id="csvBtn">⇩ Exportar CSV</button></div><div class="tablewrap"><table><thead id="resultHead"></thead><tbody id="resultsBody"></tbody></table></div></div>
+    <div class="row between"><div class="notice success" style="flex:1">Regra de reserva: somente 80% dos itens recebidos são distribuídos; pelo menos 20% ficam com a cidade. As quantidades são inteiras e nunca ultrapassam o limite de distribuição.</div><button id="saveBtn">✓ Confirmar e salvar</button></div>
+  </section>
+
+  <section id="view-history" class="view">
+    <div class="section-head"><div><h2>Histórico de distribuições</h2><p class="muted tiny">Consulte os festivais que já foram finalizados.</p></div><div class="row"><span class="pill" style="margin:0">🗂 Distribuições salvas: <b id="historyCount">0</b></span><button class="secondary small" id="refreshHistoryBtn">↻ Atualizar</button></div></div>
+    <div id="historyList"></div>
+  </section>
+
+  <section id="view-settings" class="view">
+    <div class="card"><div class="row between"><h2>Configurações</h2><button class="secondary small" data-tab="distribution">← Voltar</button></div><h3 style="margin-top:8px">Regras de cálculo</h3><p class="muted tiny">Parâmetros ativos do aplicativo.</p><div class="grid2">
+      <div class="resultbox"><div class="tiny muted">PESO DOS TROFÉUS</div><div class="big">90%</div><p class="tiny muted">Troféus normalizados em relação ao maior valor do festival.</p></div>
+      <div class="resultbox"><div class="tiny muted">PESO DAS ATIVIDADES</div><div class="big" style="color:var(--pink)">10%</div><p class="tiny muted">Metade pela quantidade de atividades e metade pela nota de participação (0–10).</p></div>
+    </div><div class="divider"></div><div class="notice">A nota de participação é uma avaliação manual da contribuição, não uma nota automática do jogo. Use o mesmo critério para todos para manter a distribuição consistente.</div>
+    <div class="divider"></div><h3>Privacidade dos registros</h3><p class="tiny muted">Cada conta enxerga apenas as próprias distribuições. No Supabase isso é garantido por RLS (execute o arquivo <b>supabase-setup.sql</b>); no modo local, o histórico fica separado por e-mail neste navegador.</p>
+    <h3>Supabase</h3><p class="tiny muted">O modo local serve para testar. Para manter o histórico entre dispositivos, configure a URL e a chave pública (anon/publishable) do seu projeto no início do arquivo HTML e execute o SQL fornecido com este projeto. Nunca coloque a service_role key no navegador.</p><p id="settingsConnection" class="status"></p></div>
+  </section>
+  <div class="footer">© 2026 Nexora ✦</div>
+</main>
+</div>
+<div id="toast" class="toast hidden" role="status"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// 1) Configure aqui a URL do projeto e a chave pública anon/publishable do Supabase.
+const SUPABASE_URL = "https://wljivcpqkxxhnwkeseux.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_Xy8ou4mwLVplwqOl4REv2w_Oy8KuaaN";
+const supabaseConfigured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("COLE_AQUI") && SUPABASE_ANON_KEY.length > 20 && !SUPABASE_ANON_KEY.includes("COLE_AQUI");
+let supabaseClient = null, currentUser = null, currentResults = null, historyCache = [], newPlayerId = null;
+const playerSeed = () => ({id:crypto.randomUUID(),name:"",trophies:0,activities:0,activityScore:0});
+let players = [playerSeed(),playerSeed(),playerSeed()];
+const prizeDefs = [
+ {key:"diamonds",name:"Diamantes",emoji:"💎",cls:"diamonds"},
+ {key:"rubies",name:"Rubis",emoji:"♦️",cls:"rubies"},
+ {key:"goldenGifts",name:"Presente Dourado",emoji:"🎁",cls:"gold"},
+ {key:"blueGifts",name:"Presente Azul",emoji:"🩵",cls:"blue"},
+ {key:"pinkGifts",name:"Presente Rosa",emoji:"💝",cls:"pink"},
+ {key:"simpleGifts",name:"Presente Simples",emoji:"🎀",cls:""},
+ {key:"gold",name:"Ouro",emoji:"🪙",cls:"gold"},
+ {key:"cardamom",name:"Cardamomo",emoji:"🌿",cls:"spice"},
+ {key:"guarana",name:"Guaraná",emoji:"🫐",cls:"spice"},
+ {key:"ginseng",name:"Ginseng",emoji:"🌱",cls:"spice"},
+ {key:"galangal",name:"Galanga",emoji:"🍃",cls:"spice"},
+ {key:"nutmeg",name:"Noz Moscada",emoji:"🌰",cls:"spice"},
+ {key:"tapioca",name:"Tapioca",emoji:"⚪",cls:""},
+ {key:"saffron",name:"Açafrão",emoji:"🌼",cls:"gold"},
+ {key:"roses",name:"Rosas",emoji:"🌹",cls:"pink"},
+ {key:"starAnise",name:"Estrela de Anis",emoji:"⭐",cls:"gold"},
+ {key:"anise",name:"Anis",emoji:"🌾",cls:"spice"}
+];
+const $ = id => document.getElementById(id);
+const fmt = n => Number(n||0).toLocaleString("pt-BR");
+const digitsToNumber = s => Number(String(s).replace(/\D/g,""))||0;
+const today = new Date(); $("festivalDate").value = new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");clearTimeout(toast.t);toast.t=setTimeout(()=>$("toast").classList.add("hidden"),2800)}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+// Dados privados por usuário: cada e-mail tem sua própria chave no modo local.
+function storageKey(){return "neonRewardsHistory:"+String(currentUser?.email||"anon").trim().toLowerCase()}
+function initSupabase(){if(supabaseConfigured && window.supabase){supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);$("connectionStatus").textContent="● Conta Conectada";$("connectionStatus").classList.add("ok")}else{$("connectionStatus").textContent="Modo local · dados neste navegador";$("settingsConnection").textContent="Supabase ainda não configurado. O histórico de teste fica neste navegador, separado por e-mail."}}
+function showApp(){ $("loginScreen").classList.add("hidden");$("loginBg").classList.add("hidden");$("app").classList.remove("hidden");refreshUserUI();renderPlayers();renderPrizes();loadHistory();switchTab("distribution"); }
+function showLogin(){ $("app").classList.add("hidden");$("loginScreen").classList.remove("hidden");$("loginBg").classList.remove("hidden");resetLoginUI(); }
+
+/* ===== Painel de login: interações ===== */
+const loginCard=$("loginScreen"), emailEl=$("email"), passEl=$("password");
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function setLoginMsg(text,type){const m=$("loginMessage");m.textContent=text;m.className="status"+(type?" "+type:"")}
+function shakeLogin(){loginCard.classList.remove("shake");void loginCard.offsetWidth;loginCard.classList.add("shake")}
+function setLoading(on){const b=$("loginBtn");b.disabled=on;b.classList.toggle("loading",on);b.querySelector(".btn-label").textContent=on?"Verificando…":"Entrar no painel ↗"}
+function resetLoginUI(){const b=$("loginBtn");b.disabled=false;b.classList.remove("loading","done");b.querySelector(".btn-label").textContent="Entrar no painel ↗";setLoginMsg("");passEl.value="";updateMeter();$("passField").classList.remove("valid","invalid");$("passHint").textContent="";passEl.type="password";$("pwToggle").textContent="👁"}
+function markField(fieldId,state,hintId,text){const f=$(fieldId);f.classList.remove("valid","invalid");if(state)f.classList.add(state);if(hintId){const h=$(hintId);h.textContent=text||"";h.className="hint"+(state==="valid"?" ok":state==="invalid"?" bad":"")}}
+const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+emailEl.addEventListener("input",()=>{const v=emailEl.value.trim();if(!v){markField("emailField","","emailHint","");return}if(emailRe.test(v))markField("emailField","valid","emailHint","E-mail com formato válido ✓");else markField("emailField","","emailHint","")});
+emailEl.addEventListener("blur",()=>{const v=emailEl.value.trim();if(v&&!emailRe.test(v))markField("emailField","invalid","emailHint","Confira o formato do e-mail (ex.: nome@dominio.com)")});
+function updateMeter(){const v=passEl.value;let s=0;if(v.length>=4)s=1;if(v.length>=8)s=2;if(v.length>=8&&/[A-Z]/.test(v)&&/\d/.test(v))s=3;if(v.length>=10&&/[A-Z]/.test(v)&&/\d/.test(v)&&/[^A-Za-z0-9]/.test(v))s=4;$("pwMeter").className="meter"+(s?" s"+s:"")}
+passEl.addEventListener("input",()=>{updateMeter();$("passField").classList.remove("invalid");if($("passHint").classList.contains("bad"))$("passHint").textContent=""});
+function capsCheck(e){if(!e.getModifierState)return;const h=$("passHint");if(e.getModifierState("CapsLock")){h.textContent="⚠ Caps Lock está ativado";h.className="hint warn"}else if(h.classList.contains("warn")){h.textContent="";h.className="hint"}}
+passEl.addEventListener("keydown",capsCheck);passEl.addEventListener("keyup",capsCheck);
+passEl.addEventListener("blur",()=>{if($("passHint").classList.contains("warn")){$("passHint").textContent="";$("passHint").className="hint"}});
+$("pwToggle").addEventListener("click",()=>{const show=passEl.type==="password";passEl.type=show?"text":"password";$("pwToggle").textContent=show?"🙈":"👁";$("pwToggle").setAttribute("aria-label",show?"Ocultar senha":"Mostrar senha");passEl.focus()});
+emailEl.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();passEl.focus()}});
+try{const saved=localStorage.getItem("neonRewardsEmail");if(saved){emailEl.value=saved;$("rememberEmail").checked=true;if(emailRe.test(saved))markField("emailField","valid","emailHint","E-mail com formato válido ✓")}}catch(e){}
+const reduceMotion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.addEventListener("mousemove",e=>{
+ if(loginCard.classList.contains("hidden"))return;
+ const r=loginCard.getBoundingClientRect();
+ loginCard.style.setProperty("--mx",(e.clientX-r.left)+"px");loginCard.style.setProperty("--my",(e.clientY-r.top)+"px");
+ if(reduceMotion||loginCard.classList.contains("shake"))return;
+ const px=(e.clientX/window.innerWidth-.5),py=(e.clientY/window.innerHeight-.5);
+ loginCard.style.transform=`perspective(900px) rotateY(${px*5}deg) rotateX(${-py*5}deg)`;
+});
+document.addEventListener("mouseleave",()=>{loginCard.style.transform=""});
+document.addEventListener("mousemove",e=>{
+ if(reduceMotion||$("loginBg").classList.contains("hidden"))return;
+ const px=(e.clientX/window.innerWidth-.5),py=(e.clientY/window.innerHeight-.5);
+ $("loginBg").querySelectorAll(".orb").forEach((o,i)=>{const k=(i+1)*14;o.style.translate=`${-px*k}px ${-py*k}px`});
+});
+// Brilho que acompanha o mouse nos cartões do painel interno
+document.addEventListener("mousemove",e=>{
+ const t=e.target.closest&&e.target.closest("#app .card,#app .resultbox,#app .prize,#app .history-item");if(!t)return;
+ const r=t.getBoundingClientRect();t.style.setProperty("--mx",(e.clientX-r.left)+"px");t.style.setProperty("--my",(e.clientY-r.top)+"px");
+});
+
+$("loginBtn").addEventListener("click",async()=>{
+ const email=emailEl.value.trim(),password=passEl.value;
+ try{if($("rememberEmail").checked)localStorage.setItem("neonRewardsEmail",email);else localStorage.removeItem("neonRewardsEmail")}catch(e){}
+ if(!email||!password){
+  markField("emailField",email?"valid":"invalid","emailHint",email?"E-mail com formato válido ✓":"Informe seu e-mail");
+  markField("passField",password?"":"invalid","passHint",password?"":"Informe sua senha");
+  setLoginMsg("Preencha e-mail e senha para continuar.","bad");shakeLogin();(email?passEl:emailEl).focus();return
+ }
+ if(!supabaseClient){
+  if(email && password.length>=4){
+   setLoading(true);setLoginMsg("Verificando acesso…");await sleep(650);
+   currentUser={email,local:true};
+   setLoading(false);const b=$("loginBtn");b.classList.add("done");b.querySelector(".btn-label").textContent="Acesso liberado ✓";setLoginMsg("Bem-vindo(a)!","ok");
+   await sleep(550);showApp();toast("Entrou no modo local de demonstração.");
+  }else{
+   markField("passField","invalid","passHint","A senha precisa ter pelo menos 4 caracteres");
+   setLoginMsg("Informe um e-mail e uma senha de pelo menos 4 caracteres para testar.","bad");shakeLogin();passEl.focus();
+  }
+  return
+ }
+ setLoading(true);setLoginMsg("Verificando acesso…");
+ const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+ if(error){setLoading(false);setLoginMsg("Não foi possível entrar. Confira seu e-mail e senha.","bad");markField("passField","invalid","passHint","");shakeLogin();passEl.select();return}
+ currentUser=data.user;
+ setLoading(false);const b=$("loginBtn");b.classList.add("done");b.querySelector(".btn-label").textContent="Acesso liberado ✓";setLoginMsg("Bem-vindo(a)!","ok");
+ await sleep(500);showApp();
+});
+passEl.addEventListener("keydown",e=>{if(e.key==="Enter")$("loginBtn").click()});
+
+function resetForm(){players=[playerSeed(),playerSeed(),playerSeed()];$("festivalName").value="";$("festivalNotes").value="";$("festivalDate").value=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);currentResults=null;renderPlayers();renderPrizes()}
+$("logoutBtn").addEventListener("click",async()=>{
+ if(supabaseClient)await supabaseClient.auth.signOut();
+ // Limpa tudo que está na tela para que o próximo login não veja dados de outra conta.
+ currentUser=null;historyCache=[];resetForm();$("historyList").innerHTML="";$("historyCount").textContent="0";showLogin();
+});
+
+/* ===== Jogadores ===== */
+function renderPlayers(){
+ $("playersBody").innerHTML=players.map(p=>`<tr class="${p.id===newPlayerId?"enter":""}">
+ <td><input aria-label="Nome do jogador" data-player="${p.id}" data-field="name" value="${escapeHtml(p.name)}" placeholder="Nome no jogo"></td>
+ <td><input aria-label="Troféus" type="text" inputmode="numeric" autocomplete="off" data-player="${p.id}" data-field="trophies" value="${fmt(p.trophies)}"></td>
+ <td><input aria-label="Quantidade de atividades" type="number" min="0" step="1" data-player="${p.id}" data-field="activities" value="${p.activities}"></td>
+ <td><input aria-label="Nota de participação de 0 a 10" type="number" min="0" max="10" step=".5" data-player="${p.id}" data-field="activityScore" value="${p.activityScore}"></td>
+ <td><span class="badge ${isActive(p)?"on":""}">${isActive(p)?"● Participante":"Sem participação"}</span></td>
+ <td><button class="danger small" data-remove="${p.id}" aria-label="Remover jogador">×</button></td></tr>`).join("");
+ newPlayerId=null;
+ $("playersBody").querySelectorAll("input").forEach(inp=>inp.addEventListener("change",()=>{const p=players.find(x=>x.id===inp.dataset.player);if(!p)return;const f=inp.dataset.field;let v;if(f==="name")v=inp.value;else if(f==="trophies")v=digitsToNumber(inp.value);else v=Math.max(0,Number(inp.value)||0);if(f==="activityScore")v=Math.min(10,v);if(["trophies","activities"].includes(f))v=Math.floor(v);p[f]=v;renderPlayers()}));
+ $("playersBody").querySelectorAll("[data-remove]").forEach(btn=>btn.addEventListener("click",()=>{players=players.filter(p=>p.id!==btn.dataset.remove);if(!players.length)players.push(playerSeed());renderPlayers()}));
+}
+// Troféus: formata com separador de milhar enquanto digita (22000 → 22.000)
+$("playersBody").addEventListener("input",e=>{
+ const inp=e.target;if(inp.dataset.field!=="trophies")return;
+ const pos=inp.selectionStart;const before=inp.value.slice(0,pos).replace(/\D/g,"").length;
+ const digits=inp.value.replace(/\D/g,"");const f=digits?Number(digits).toLocaleString("pt-BR"):"";
+ inp.value=f;let np=f.length;
+ if(before===0)np=0;else{let c=0;for(let i=0;i<f.length;i++){if(/\d/.test(f[i]))c++;if(c===before){np=i+1;break}}}
+ try{inp.setSelectionRange(np,np)}catch(_){}
+});
+function isActive(p){return Number(p.trophies)>0||Number(p.activities)>0||Number(p.activityScore)>0}
+$("addPlayerBtn").addEventListener("click",()=>{const p=playerSeed();newPlayerId=p.id;players.push(p);renderPlayers();$("playersBody").lastElementChild?.querySelector("input")?.focus()});
+
+/* ===== Prêmios ===== */
+function renderPrizes(){ $("prizeGrid").innerHTML=prizeDefs.map(d=>`<div class="prize ${d.cls}"><div class="emoji">${d.emoji}</div> <strong>${d.name}</strong><input type="number" min="0" step="1" value="0" data-prize="${d.key}" aria-label="Total de ${d.name}"><div class="prize-prev" data-prev="${d.key}">Total disponível</div></div>`).join("");}
+$("prizeGrid").addEventListener("input",e=>{
+ const el=e.target;if(!el.dataset.prize)return;
+ const n=Math.max(0,Math.floor(Number(el.value)||0)),dist=Math.floor(n*0.8);
+ el.closest(".prize").classList.toggle("filled",n>0);
+ el.closest(".prize").querySelector("[data-prev]").innerHTML=n>0?`Distribui <b>${fmt(dist)}</b> · <span class="keep">Reserva ${fmt(n-dist)}</span>`:"Total disponível";
+});
+function readPrizes(){const out={};document.querySelectorAll("[data-prize]").forEach(el=>out[el.dataset.prize]=Math.max(0,Math.floor(Number(el.value)||0)));return out}
+
+/* ===== Cálculo (regras inalteradas) ===== */
+function activityRaw(p,maxActs){const count=maxActs>0?Number(p.activities)/maxActs:0;const score=Number(p.activityScore)/10;return (count*.5+score*.5)*100}
+function calculate(){
+ const valid=players.filter(p=>p.name.trim()).map(p=>({...p,name:p.name.trim(),trophies:Math.max(0,Math.floor(Number(p.trophies)||0)),activities:Math.max(0,Math.floor(Number(p.activities)||0)),activityScore:Math.min(10,Math.max(0,Number(p.activityScore)||0))}));
+ if(!valid.length){toast("Adicione pelo menos um jogador com nome.");return}
+ const maxT=Math.max(0,...valid.map(p=>p.trophies)),maxA=Math.max(0,...valid.map(p=>p.activities));
+ const prepared=valid.map(p=>{const active=isActive(p);const trophyPart=maxT>0?90*p.trophies/maxT:0;const activityScore=activityRaw(p,maxA);const activityPart=10*activityScore/100;return {...p,active,activityScoreRaw:activityScore,points:active?trophyPart+activityPart:0}});
+ const totalPoints=prepared.reduce((s,p)=>s+p.points,0);
+ if(totalPoints<=0){toast("Não há participantes com pontuação para distribuir os prêmios.");return}
+ const prizes=readPrizes(),allocations={};
+ for(const d of prizeDefs){
+   const total=prizes[d.key]||0;
+   // Distribui no máximo 80% do recebido; o restante fica reservado para a cidade.
+   // Arredondar para baixo garante que nunca se distribua acima do limite de 80%.
+   const distributable=Math.floor(total*0.8);
+   const eligible=prepared.filter(p=>p.active&&p.points>0);
+   const raw=eligible.map(p=>({id:p.id,value:distributable*p.points/totalPoints}));
+   const base=raw.map(x=>({...x,amount:Math.floor(x.value),fraction:x.value-Math.floor(x.value)}));
+   let remainder=distributable-base.reduce((s,x)=>s+x.amount,0);
+   [...base].sort((a,b)=>b.fraction-a.fraction).slice(0,remainder).forEach(x=>{const target=base.find(y=>y.id===x.id);target.amount++});
+   allocations[d.key]=Object.fromEntries(prepared.map(p=>[p.id,base.find(x=>x.id===p.id)?.amount||0]));
+ }
+ currentResults={festival:{name:$("festivalName").value.trim()||"Festival sem nome",date:$("festivalDate").value||new Date().toISOString().slice(0,10),notes:$("festivalNotes").value.trim()},players:prepared,prizes,allocations,totalPoints};
+ renderResults();switchTab("results");
+}
+// Ícone + nome + quantidade de cada item (apenas os maiores que zero)
+function chips(map,emptyText){
+ const items=prizeDefs.filter(d=>(Number(map[d.key])||0)>0);
+ if(!items.length)return `<span class="tiny muted">${emptyText||"Nenhum item"}</span>`;
+ return items.map((d,i)=>`<span class="chip" style="animation-delay:${i*40}ms"><span class="ce">${d.emoji}</span><span class="cn">${d.name}</span><b>${fmt(map[d.key])}</b></span>`).join("");
+}
+function renderResults(){
+ const r=currentResults;if(!r)return;
+ const eligible=r.players.filter(p=>p.active&&p.points>0).length;
+ const received={},distributed={},reserved={};
+ prizeDefs.forEach(d=>{received[d.key]=Number(r.prizes[d.key])||0;distributed[d.key]=Object.values(r.allocations[d.key]||{}).reduce((a,n)=>a+(Number(n)||0),0);reserved[d.key]=received[d.key]-distributed[d.key]});
+ $("resultSummary").innerHTML=`<div class="row between"><div><div class="tiny muted">FESTIVAL</div><h2>${escapeHtml(r.festival.name)}</h2><div class="tiny muted">${escapeHtml(r.festival.date)} · ${eligible} participante(s) elegível(is)</div></div><div><div class="tiny muted">PONTOS SOMADOS</div><div class="big">${r.totalPoints.toFixed(2)}</div></div></div>
+ <div class="rgrid">
+  <div class="resultbox"><div class="tiny muted">ITENS RECEBIDOS</div><div class="chips">${chips(received,"Nenhum item informado")}</div></div>
+  <div class="resultbox"><div class="tiny muted">ITENS DISTRIBUÍDOS (ATÉ 80%)</div><div class="chips">${chips(distributed,"Nenhum item distribuído")}</div></div>
+  <div class="resultbox keep"><div class="tiny muted">ITENS RESERVADOS PARA A CIDADE</div><div class="chips">${chips(reserved,"Nenhum item reservado")}</div></div>
+ </div>`;
+ const maxP=Math.max(0,...r.players.map(p=>p.points));
+ $("resultHead").innerHTML=`<tr><th>Jogador</th><th>Troféus</th><th>Atividades</th><th>Nota</th><th>Pontos</th>${prizeDefs.map(d=>`<th>${d.emoji} ${d.name}</th>`).join("")}</tr>`;
+ $("resultsBody").innerHTML=r.players.map(p=>`<tr><td><strong>${escapeHtml(p.name)}</strong>${p.active?"":"<div class='tiny muted'>Sem participação</div>"}</td><td>${fmt(p.trophies)}</td><td>${fmt(p.activities)}</td><td>${p.activityScore}/10</td><td><strong>${p.points.toFixed(2)}</strong><div class="bar"><i style="width:${maxP>0?(p.points/maxP*100).toFixed(1):0}%"></i></div></td>${prizeDefs.map(d=>`<td><strong>${fmt(r.allocations[d.key][p.id]||0)}</strong></td>`).join("")}</tr>`).join("");
+}
+$("calculateBtn").addEventListener("click",calculate);$("backEditBtn").addEventListener("click",()=>switchTab("distribution"));
+
+/* ===== Navegação ===== */
+const stepOrder={distribution:0,results:1,history:2};
+function updateSteps(name){const idx=stepOrder[name];document.querySelectorAll(".step").forEach((s,i)=>{s.classList.toggle("active",i===idx);s.classList.toggle("done",idx!==undefined&&i<idx);if(i===1)s.classList.toggle("locked",!currentResults)})}
+function switchTab(name){
+ if(name==="results"&&!currentResults){toast("Calcule a distribuição primeiro para ver o resultado.");return}
+ document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
+ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="view-"+name));
+ updateSteps(name);if(name==="history")loadHistory();
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
+document.querySelectorAll("[data-tab]").forEach(b=>{if(!b.classList.contains("tab"))b.addEventListener("click",()=>switchTab(b.dataset.tab))});
+$("newFestivalBtn").addEventListener("click",()=>{resetForm();switchTab("distribution");toast("Nova distribuição iniciada.")});
+
+/* ===== Exportação ===== */
+function exportCsv(){
+ if(!currentResults)return;const r=currentResults;const rows=[["Jogador","Troféus","Atividades","Nota","Pontos",...prizeDefs.map(d=>d.name)]];
+ r.players.forEach(p=>rows.push([p.name,p.trophies,p.activities,p.activityScore,p.points.toFixed(2),...prizeDefs.map(d=>r.allocations[d.key][p.id]||0)]));
+ const csv=rows.map(row=>row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(";")).join("\r\n");
+ const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`distribuicao-${r.festival.date}.csv`;a.click();URL.revokeObjectURL(url);
+}
+$("csvBtn").addEventListener("click",exportCsv);
+
+/* ===== Salvar / histórico (privado por usuário) ===== */
+function makeRecord(){
+ const r=currentResults;
+ return {festival_name:r.festival.name,festival_date:r.festival.date,notes:r.festival.notes,players:r.players,prizes:r.prizes,allocations:r.allocations,total_points:r.totalPoints};
+}
+async function saveDistribution(){
+ if(!currentResults){toast("Calcule a distribuição antes de salvar.");return}
+ if(!currentUser){toast("Sessão expirada. Entre novamente.");return}
+ const record=makeRecord();
+ if(supabaseClient&&!currentUser?.local){
+  const {data,error}=await supabaseClient.from("festival_distributions").insert({...record,user_id:currentUser.id}).select().single();
+  if(error){toast("Não foi possível salvar no Supabase. Confira a tabela e as políticas RLS.");console.error(error);return}
+  historyCache.unshift(data);
+ }else{
+  const all=JSON.parse(localStorage.getItem(storageKey())||"[]");
+  all.unshift({...record,id:crypto.randomUUID(),created_at:new Date().toISOString(),user_id:String(currentUser.email).toLowerCase()});
+  localStorage.setItem(storageKey(),JSON.stringify(all));historyCache=all;
+ }
+ toast("Distribuição salva no histórico!");updateStats();renderHistory();switchTab("history");
+}
+$("saveBtn").addEventListener("click",saveDistribution);
+async function loadHistory(){
+ if(!currentUser){historyCache=[];renderHistory();updateStats();return}
+ if(supabaseClient&&!currentUser.local){
+  const {data,error}=await supabaseClient.from("festival_distributions").select("*").eq("user_id",currentUser.id).order("festival_date",{ascending:false}).order("created_at",{ascending:false});
+  if(error){toast("Erro ao carregar histórico. Confira as políticas RLS.");console.error(error);return}historyCache=data||[];
+ }else historyCache=JSON.parse(localStorage.getItem(storageKey())||"[]");
+ renderHistory();updateStats();
+}
+$("refreshHistoryBtn").addEventListener("click",loadHistory);
+function renderHistory(){
+ const list=$("historyList");
+ if(!historyCache.length){list.innerHTML='<div class="card empty"><div style="font-size:35px">🗂️</div><h3>Nenhuma distribuição salva ainda</h3><p>Quando você confirmar uma distribuição, ela aparecerá aqui.</p><button id="historyNewBtn">＋ Criar primeira distribuição</button></div>'; $("historyNewBtn").onclick=()=>$("newFestivalBtn").click();return}
+ list.innerHTML=historyCache.map(item=>{const ps=item.players||[];const joined=ps.filter(p=>p.active!==false).length;return `<article class="history-item"><div class="row between"><div><h3>${escapeHtml(item.festival_name||"Festival")}</h3><div class="meta"><span>📅 ${escapeHtml(item.festival_date||"Sem data")}</span><span>👥 ${joined} jogador(es)</span></div></div><div class="row"><button class="secondary small" data-detail="${item.id}">Ver detalhes</button><button class="danger small trash" data-del="${item.id}" title="Apagar distribuição" aria-label="Apagar distribuição">🗑</button></div></div><div id="detail-${item.id}" class="detail hidden"></div></article>`}).join("");
+ list.querySelectorAll("[data-detail]").forEach(btn=>btn.addEventListener("click",()=>{const item=historyCache.find(x=>String(x.id)===btn.dataset.detail);const div=$("detail-"+item.id);if(!div.classList.contains("hidden")){div.classList.add("hidden");btn.textContent="Ver detalhes";return}div.classList.remove("hidden");btn.textContent="Ocultar detalhes";const ps=item.players||[],alloc=item.allocations||{};div.innerHTML=`<div class="tiny muted" style="margin-bottom:10px">${escapeHtml(item.notes||"Sem observações")}</div><div class="tiny muted">Prêmios recebidos pela cidade</div><div class="chips" style="margin-bottom:14px">${chips(item.prizes||{},"Sem prêmios registrados")}</div><div class="tablewrap"><table><thead><tr><th>Jogador</th><th>Troféus</th>${prizeDefs.map(d=>`<th>${d.name}</th>`).join("")}</tr></thead><tbody>${ps.map(p=>`<tr><td>${escapeHtml(p.name)}</td><td>${fmt(p.trophies)}</td>${prizeDefs.map(d=>`<td>${fmt((alloc[d.key]||{})[p.id]||0)}</td>`).join("")}</tr>`).join("")}</tbody></table></div><div class="row" style="margin-top:10px"><button class="secondary small" data-export-history="${item.id}">Exportar CSV desta distribuição</button></div>`;div.querySelector("[data-export-history]").onclick=()=>exportRecordCsv(item)}));
+}
+function exportRecordCsv(item){
+ const ps=item.players||[],alloc=item.allocations||{},rows=[["Jogador","Troféus","Atividades","Nota",...prizeDefs.map(d=>d.name)]];
+ ps.forEach(p=>rows.push([p.name,p.trophies,p.activities,p.activityScore,...prizeDefs.map(d=>(alloc[d.key]||{})[p.id]||0)]));
+ const csv=rows.map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(";")).join("\r\n");
+ const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`historico-${item.festival_date||"festival"}.csv`;a.click();URL.revokeObjectURL(url);
+}
+function updateStats(){ $("historyCount").textContent=historyCache.length }
+
+/* ===== Apagar distribuição (lixeira, com confirmação em dois cliques) ===== */
+$("historyList").addEventListener("click",async e=>{
+ const btn=e.target.closest("[data-del]");if(!btn)return;
+ if(!btn.classList.contains("armed")){
+  btn.classList.add("armed");btn.textContent="Apagar?";
+  clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.classList.remove("armed");btn.textContent="🗑"},3000);return
+ }
+ clearTimeout(btn._t);btn.disabled=true;
+ const id=btn.dataset.del;
+ if(supabaseClient&&!currentUser?.local){
+  const {data,error}=await supabaseClient.from("festival_distributions").delete().eq("id",id).eq("user_id",currentUser.id).select();
+  if(error||!data||!data.length){toast("Não foi possível apagar. Confira as políticas RLS.");console.error(error);btn.disabled=false;btn.classList.remove("armed");btn.textContent="🗑";return}
+ }else{
+  const all=JSON.parse(localStorage.getItem(storageKey())||"[]").filter(x=>String(x.id)!==String(id));
+  localStorage.setItem(storageKey(),JSON.stringify(all));
+ }
+ btn.closest(".history-item")?.classList.add("removing");await sleep(300);
+ historyCache=historyCache.filter(x=>String(x.id)!==String(id));
+ renderHistory();updateStats();toast("Distribuição apagada.");
+});
+
+/* ===== Menu do usuário: nome de usuário + configurações ===== */
+function localNameKey(){return "neonRewardsName:"+String(currentUser?.email||"").trim().toLowerCase()}
+function getDisplayName(){
+ if(!currentUser)return "";
+ const m=currentUser.user_metadata&&currentUser.user_metadata.display_name;if(m)return m;
+ if(currentUser.local){try{const n=localStorage.getItem(localNameKey());if(n)return n}catch(e){}}
+ return String(currentUser.email||"").split("@")[0];
+}
+function refreshUserUI(){
+ const n=getDisplayName();
+ $("userName").textContent=n;$("userAvatar").textContent=(n[0]||"?").toUpperCase();
+ $("userNameInput").value=n;$("userEmailLine").textContent=currentUser?.email||"";
+}
+function closeMenu(){$("userMenu").classList.remove("open");$("userMenuBtn").setAttribute("aria-expanded","false")}
+async function saveUserName(){
+ const v=$("userNameInput").value.trim().replace(/\s+/g," ");
+ if(v.length<2){toast("O nome precisa ter pelo menos 2 caracteres.");return}
+ if(supabaseClient&&!currentUser?.local){
+  const {data,error}=await supabaseClient.auth.updateUser({data:{display_name:v}});
+  if(error){toast("Não foi possível salvar o nome.");console.error(error);return}
+  currentUser=data.user;
+ }else{try{localStorage.setItem(localNameKey(),v)}catch(e){}}
+ refreshUserUI();closeMenu();toast("Nome de usuário atualizado!");
+}
+$("userMenuBtn").addEventListener("click",e=>{e.stopPropagation();const o=$("userMenu").classList.toggle("open");$("userMenuBtn").setAttribute("aria-expanded",String(o));if(o)setTimeout(()=>$("userNameInput").focus(),80)});
+document.addEventListener("click",e=>{if(!e.target.closest(".usermenu"))closeMenu()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu()});
+$("saveNameBtn").addEventListener("click",saveUserName);
+$("userNameInput").addEventListener("keydown",e=>{if(e.key==="Enter")saveUserName()});
+$("menuSettingsBtn").addEventListener("click",()=>{closeMenu();switchTab("settings")});
+initSupabase();
+// If Supabase session exists already, restore it; otherwise display login.
+(async()=>{if(supabaseClient){const {data}=await supabaseClient.auth.getSession();if(data.session){currentUser=data.session.user;showApp()}else showLogin()}else showLogin()})();
+</script>
+</body>
+</html>
