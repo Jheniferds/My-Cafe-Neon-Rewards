@@ -82,6 +82,11 @@ tr.enter td{animation:rowIn .4s ease both}@keyframes rowIn{from{opacity:0;transf
 #app .history-item.removing{opacity:0;transform:translateX(30px) scale(.97);transition:.3s}
 @media(max-width:520px){.uname,.caret{display:none}.umbtn{padding:4px}.umpanel{right:-6px;width:min(290px,calc(100vw - 28px))}}
 
+.umpanel input,.umpanel select{padding:12px 14px}
+.umpanel select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:46px;background-color:#0c0b1c;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23aaa6ca' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;background-size:12px 8px}
+.umpanel select:hover{border-color:#6a58a8}
+.umpanel select option{background:#121127;color:#f8f7ff}
+.umpanel button:disabled{opacity:.45;cursor:default;box-shadow:none;transform:none;filter:none}
 /* ===== PAINEL DE LOGIN — camada interativa ===== */
 #loginBg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
 #loginBg .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.28;will-change:transform}
@@ -180,13 +185,9 @@ tr.enter td{animation:rowIn .4s ease both}@keyframes rowIn{from{opacity:0;transf
     <span class="fl f1">✦</span><span class="fl f2">✧</span><span class="fl f3">✦</span>
     <div class="hero-top"><div><div class="pill"><span class="dot"></span> CENTRAL DE DISTRIBUIÇÃO</div><h1>Leve sua cidade<br><span class="accent">ao próximo Nível</span></h1><p>Organize os resultados do festival, distribua recompensas justas e mantenha o histórico registrado. Evolua sua cidade com estratégia, transparência e excelência!</p></div></div>
     <div class="row" style="margin-top:19px"><button id="newFestivalBtn">＋ Nova distribuição</button><button class="secondary" data-tab="history">Ver histórico ↗</button></div>
-    <div class="steps">
-      <button class="step active" data-tab="distribution"><span class="n">1</span>Preencher dados</button>
-      <button class="step locked" data-tab="results"><span class="n">2</span>Revisar resultado</button>
-      <button class="step" data-tab="history"><span class="n">3</span>Histórico</button>
-    </div>
+    
   </section>
-  <nav class="tabs"><button class="tab active" data-tab="distribution">⚡ Distribuição</button><button class="tab" data-tab="results">🏆 Resultado calculado</button><button class="tab" data-tab="history">🗂 Histórico</button></nav>
+  <nav class="tabs"><button class="tab active" data-tab="distribution">⚡ Distribuição</button><button class="tab" data-tab="results">📋 Revisar Distribuição</button></nav>
 
   <section id="view-distribution" class="view active">
     <div class="section-head"><div><h2>Nova distribuição</h2><p class="muted tiny">Preencha o festival e adicione os jogadores participantes.</p></div><span class="pill">90% TROFÉUS · 10% ATIVIDADES</span></div>
@@ -213,7 +214,7 @@ tr.enter td{animation:rowIn .4s ease both}@keyframes rowIn{from{opacity:0;transf
   </section>
 
   <section id="view-results" class="view">
-    <div class="section-head"><div><h2>Resultado calculado</h2><p class="muted tiny">Revise as parcelas antes de confirmar.</p></div><button class="secondary small" id="backEditBtn">← Voltar e editar</button></div>
+    <div class="section-head"><div><h2>Revisar distribuição</h2><p class="muted tiny">Revise as parcelas antes de confirmar.</p></div><button class="secondary small" id="backEditBtn">← Voltar e editar</button></div>
     <div id="resultSummary" class="resultbox" style="margin-bottom:15px"></div>
     <div class="card" style="margin-bottom:15px"><div class="section-head"><div><h3>Recompensas por jogador</h3><p class="tiny muted">A coluna de pontos mostra a pontuação ponderada.</p></div><button class="secondary small" id="csvBtn">⇩ Exportar CSV</button></div><div class="tablewrap"><table><thead id="resultHead"></thead><tbody id="resultsBody"></tbody></table></div></div>
     <div class="row between"><div class="notice success" style="flex:1">Regra de reserva: somente 80% dos itens recebidos são distribuídos; pelo menos 20% ficam com a cidade. As quantidades são inteiras e nunca ultrapassam o limite de distribuição.</div><button id="saveBtn">✓ Confirmar e salvar</button></div>
@@ -436,13 +437,11 @@ function renderResults(){
 $("calculateBtn").addEventListener("click",calculate);$("backEditBtn").addEventListener("click",()=>switchTab("distribution"));
 
 /* ===== Navegação ===== */
-const stepOrder={distribution:0,results:1,history:2};
-function updateSteps(name){const idx=stepOrder[name];document.querySelectorAll(".step").forEach((s,i)=>{s.classList.toggle("active",i===idx);s.classList.toggle("done",idx!==undefined&&i<idx);if(i===1)s.classList.toggle("locked",!currentResults)})}
 function switchTab(name){
  if(name==="results"&&!currentResults){toast("Calcule a distribuição primeiro para ver o resultado.");return}
  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="view-"+name));
- updateSteps(name);if(name==="history")loadHistory();
+ if(name==="history")loadHistory();
 }
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
 document.querySelectorAll("[data-tab]").forEach(b=>{if(!b.classList.contains("tab"))b.addEventListener("click",()=>switchTab(b.dataset.tab))});
@@ -618,10 +617,14 @@ function getRole(){
 function refreshUserUI(){
  const n=getDisplayName();
  $("userName").textContent=n;$("userAvatar").textContent=(n[0]||"?").toUpperCase();
- $("userNameInput").value=n;$("userRoleSelect").value=getRole();$("userEmailLine").textContent=currentUser?.email||"";
+ $("userNameInput").value=n;$("userRoleSelect").value=getRole();updateSaveState();$("userEmailLine").textContent=currentUser?.email||"";
 }
-function closeMenu(){$("userMenu").classList.remove("open");$("userMenuBtn").setAttribute("aria-expanded","false")}
+function profileDirty(){return $("userNameInput").value.trim().replace(/\s+/g," ")!==getDisplayName()||$("userRoleSelect").value!==getRole()}
+function updateSaveState(){$("saveNameBtn").disabled=!profileDirty()}
+function syncProfileForm(){$("userNameInput").value=getDisplayName();$("userRoleSelect").value=getRole();updateSaveState()}
+function closeMenu(){$("userMenu").classList.remove("open");$("userMenuBtn").setAttribute("aria-expanded","false");syncProfileForm()}
 async function saveUserName(){
+ if($("saveNameBtn").disabled)return;
  const v=$("userNameInput").value.trim().replace(/\s+/g," ");
  if(v.length<2){toast("O nome precisa ter pelo menos 2 caracteres.");return}
  const role=ROLES.includes($("userRoleSelect").value)?$("userRoleSelect").value:ROLES[0];
@@ -632,10 +635,11 @@ async function saveUserName(){
  }else{try{localStorage.setItem(localNameKey(),v);localStorage.setItem(localRoleKey(),role)}catch(e){}}
  refreshUserUI();closeMenu();toast("Perfil atualizado!");
 }
-$("userMenuBtn").addEventListener("click",e=>{e.stopPropagation();const o=$("userMenu").classList.toggle("open");$("userMenuBtn").setAttribute("aria-expanded",String(o));if(o)setTimeout(()=>$("userNameInput").focus(),80)});
+$("userMenuBtn").addEventListener("click",e=>{e.stopPropagation();if($("userMenu").classList.contains("open")){closeMenu();return}syncProfileForm();$("userMenu").classList.add("open");$("userMenuBtn").setAttribute("aria-expanded","true");setTimeout(()=>$("userNameInput").focus(),80)});
 document.addEventListener("click",e=>{if(!e.target.closest(".usermenu"))closeMenu()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu()});
 $("saveNameBtn").addEventListener("click",saveUserName);
+$("userNameInput").addEventListener("input",updateSaveState);$("userRoleSelect").addEventListener("change",updateSaveState);
 $("userRoleSelect").addEventListener("keydown",e=>{if(e.key==="Enter")saveUserName()});
 $("userNameInput").addEventListener("keydown",e=>{if(e.key==="Enter")saveUserName()});
 $("menuSettingsBtn").addEventListener("click",()=>{closeMenu();switchTab("settings")});
