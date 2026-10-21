@@ -139,6 +139,9 @@ tr.enter td{animation:rowIn .4s ease both}@keyframes rowIn{from{opacity:0;transf
 #loginBtn.done{background:linear-gradient(110deg,#0f9d78,#52f5bd);color:#06241b}
 .login .status{min-height:18px;transition:color .2s}
 @media(prefers-reduced-motion:reduce){#loginBg .orb,#loginBg .spark,.login,.login:after,.login .logo,.hero:before,.hero:after,.hero .fl,.steam,.view.active,.chip,.bar i,tr.enter td{animation:none!important}}
+/* Login: caixa centralizada na tela e fixa (não rola com a página) */
+.login{position:fixed;inset:0;margin:auto;width:calc(100% - 32px);max-width:430px;height:fit-content;max-height:calc(100vh - 24px);overflow-x:hidden;overflow-y:auto;scrollbar-width:none}
+.login::-webkit-scrollbar{display:none}
 </style>
 </head>
 <body>
